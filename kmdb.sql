@@ -49,10 +49,33 @@
 --   is a reserved word in sqlite and will break your database! Instead, 
 --   think of a better word to describe this concept; i.e. the relationship 
 --   between an actor and the movie in which they play a part.
+
+/*  There are two main entities we are interested in: Movies (information about the actual movies) and Roles 
+    (What actors played which characters in which films).
+    Movies:
+        Running id (INT - 1,2,3 etc. This will be the primary key)
+        Title (STRING)
+        Release_year (INT - Since we are only interested in the year of release, not an actual date)
+        Rating (STRING - The MPAA Rating)
+        Studio (STRING - Studio that made the film)
+    Roles:
+        Actor (STRING - Actor's name)
+        movie_id (INT - Movie they starred in. This will be the foreign key to join with the Movies table)
+        Role (STRING - Character portrayed)
+
+*/
+
 -- 2. Execution of the domain model (CREATE TABLE) - 4 points
 -- - Follow best practices for table and column names
 -- - Use correct data column types (i.e. TEXT/INTEGER)
 -- - Use of the `model_id` naming convention for foreign key columns
+CREATE TABLE movie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title STRING,
+    release_year INT,
+    rating STRING,
+    studio STRING
+);
 -- 3. Insertion of data (INSERT statements) - 4 points
 -- - Insert data into all the tables you've created
 -- - It actually works, i.e. proper INSERT syntax
