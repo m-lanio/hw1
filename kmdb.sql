@@ -59,9 +59,9 @@
         Rating (STRING - The MPAA Rating)
         Studio (STRING - Studio that made the film)
     Roles:
-        Actor (STRING - Actor's name)
+        actor (STRING - Actor's name)
         movie_id (INT - Movie they starred in. This will be the foreign key to join with the Movies table)
-        Role (STRING - Character portrayed)
+        char_played (STRING - Character portrayed)
 
 */
 
@@ -69,6 +69,7 @@
 -- - Follow best practices for table and column names
 -- - Use correct data column types (i.e. TEXT/INTEGER)
 -- - Use of the `model_id` naming convention for foreign key columns
+/*
 CREATE TABLE movie (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title STRING,
@@ -76,14 +77,60 @@ CREATE TABLE movie (
     rating STRING,
     studio STRING
 );
+
+CREATE TABLE actor (
+    actor STRING,
+    movie_id INT,
+    char_played STRING
+);
+*/
+
 -- 3. Insertion of data (INSERT statements) - 4 points
 -- - Insert data into all the tables you've created
 -- - It actually works, i.e. proper INSERT syntax
+/*
+INSERT INTO movie (title, release_year, rating, studio)
+VALUES
+    ('Batman Begins', 2005, 'PG-13', 'Warner Bros.'),
+    ('The Dark Knight', 2008, 'PG-13', 'Warner Bros.'),
+    ('The Dark Knight Rises', 2012, 'PG-13', 'Warner Bros.');
+
+INSERT INTO actor (actor, movie_id, char_played)
+VALUES
+---------------Batman Begins----------------------      
+    ('Christian Bale', 1, 'Bruce Wayne'),
+    ('Michael Caine', 1, 'Alfred'),
+    ('Liam Neeson', 1, 'Ra"s Al Ghul'),
+    ('Katie Holmes', 1, 'Rachel Dawes'),
+    ('Gary Oldman', 1, 'Commissioner Gordon'),
+---------------The Dark Knight--------------------
+   ('Christian Bale', 2, 'Bruce Wayne'),
+   ('Heath Ledger', 2, 'Joker'),
+   ('Aaron Eckhart', 2, 'Harvey Dent'),
+   ('Michael Caine', 2, 'Alfred'),
+   ('Maggie Gyllenhaal', 2, 'Rachel Dawes'),
+---------------The Dark Knight Rises--------------------
+   ('Christian Bale', 3, 'Bruce Wayne'),
+   ('Gary Oldman', 3, 'Commissioner Gordon'),
+   ('Tom Hardy', 3, 'Bane'),
+   ('Joseph Gordon-Levitt', 3, 'John Blake'),
+   ('Anne Hathaway', 3, 'Selina Kyle');
+   */
+
 -- 4. "The report" (SELECT statements) - 6 points
 -- - Write 2 `SELECT` statements to produce something similar to the
 --   sample output below - 1 for movies and 1 for cast. You will need
 --   to read data from multiple tables in each `SELECT` statement.
 --   Formatting does not matter.
+
+/*
+    SELECT title, release_year, rating, studio
+    FROM movie;
+
+    SELECT title, actor, char_played
+    FROM movie
+    LEFT JOIN actor ON movie.id = actor.movie_id;
+*/
 
 -- Submission
 -- 
@@ -128,13 +175,52 @@ CREATE TABLE movie (
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
+DROP TABLE IF EXISTS movie;
+DROP TABLE IF EXISTS actor;
 
 -- Create new tables, according to your domain model
--- TODO!
+CREATE TABLE movie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title STRING,
+    release_year INT,
+    rating STRING,
+    studio STRING
+);
+
+CREATE TABLE actor (
+    actor STRING,
+    movie_id INT,
+    char_played STRING
+);
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
--- TODO!
+INSERT INTO movie (title, release_year, rating, studio)
+VALUES
+    ('Batman Begins', 2005, 'PG-13', 'Warner Bros.'),
+    ('The Dark Knight', 2008, 'PG-13', 'Warner Bros.'),
+    ('The Dark Knight Rises', 2012, 'PG-13', 'Warner Bros.');
+
+INSERT INTO actor (actor, movie_id, char_played)
+VALUES
+---------------Batman Begins----------------------      
+    ('Christian Bale', 1, 'Bruce Wayne'),
+    ('Michael Caine', 1, 'Alfred'),
+    ('Liam Neeson', 1, 'Ra"s Al Ghul'),
+    ('Katie Holmes', 1, 'Rachel Dawes'),
+    ('Gary Oldman', 1, 'Commissioner Gordon'),
+---------------The Dark Knight--------------------
+   ('Christian Bale', 2, 'Bruce Wayne'),
+   ('Heath Ledger', 2, 'Joker'),
+   ('Aaron Eckhart', 2, 'Harvey Dent'),
+   ('Michael Caine', 2, 'Alfred'),
+   ('Maggie Gyllenhaal', 2, 'Rachel Dawes'),
+---------------The Dark Knight Rises--------------------
+   ('Christian Bale', 3, 'Bruce Wayne'),
+   ('Gary Oldman', 3, 'Commissioner Gordon'),
+   ('Tom Hardy', 3, 'Bane'),
+   ('Joseph Gordon-Levitt', 3, 'John Blake'),
+   ('Anne Hathaway', 3, 'Selina Kyle');
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -142,7 +228,8 @@ CREATE TABLE movie (
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
+--SELECT * FROM movie;
+SELECT id FROM movie;
 
 -- Prints a header for the cast output
 .print ""
