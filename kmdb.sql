@@ -180,7 +180,7 @@ DROP TABLE IF EXISTS actor;
 
 -- Create new tables, according to your domain model
 CREATE TABLE movie (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    movie_id INT AUTO_INCREMENT PRIMARY KEY, --Why isn't this working for me?
     title STRING,
     release_year INT,
     rating STRING,
@@ -195,18 +195,18 @@ CREATE TABLE actor (
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
-INSERT INTO movie (title, release_year, rating, studio)
+INSERT INTO movie (movie_id,title, release_year, rating, studio)
 VALUES
-    ('Batman Begins', 2005, 'PG-13', 'Warner Bros.'),
-    ('The Dark Knight', 2008, 'PG-13', 'Warner Bros.'),
-    ('The Dark Knight Rises', 2012, 'PG-13', 'Warner Bros.');
+    (1, 'Batman Begins', 2005, 'PG-13', 'Warner Bros.'),
+    (2, 'The Dark Knight', 2008, 'PG-13', 'Warner Bros.'),
+    (3, 'The Dark Knight Rises', 2012, 'PG-13', 'Warner Bros.');
 
 INSERT INTO actor (actor, movie_id, char_played)
 VALUES
 ---------------Batman Begins----------------------      
     ('Christian Bale', 1, 'Bruce Wayne'),
     ('Michael Caine', 1, 'Alfred'),
-    ('Liam Neeson', 1, 'Ra"s Al Ghul'),
+    ('Liam Neeson', 1, 'Ra''s Al Ghul'), --'' in a row escapes to encoded single ' in the text
     ('Katie Holmes', 1, 'Rachel Dawes'),
     ('Gary Oldman', 1, 'Commissioner Gordon'),
 ---------------The Dark Knight--------------------
@@ -228,8 +228,8 @@ VALUES
 .print ""
 
 -- The SQL statement for the movies output
---SELECT * FROM movie;
-SELECT id FROM movie;
+SELECT title, release_year, rating, studio
+FROM movie;
 
 -- Prints a header for the cast output
 .print ""
@@ -239,4 +239,6 @@ SELECT id FROM movie;
 
 
 -- The SQL statement for the cast output
--- TODO!
+SELECT title, actor, char_played
+FROM movie
+LEFT JOIN actor ON movie.movie_id = actor.movie_id;
